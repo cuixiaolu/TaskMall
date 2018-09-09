@@ -42,7 +42,7 @@
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
-                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                                <img src="" class="layadmin-user-login-codeimg" id="vcode">
                             </div>
                         </div>
                     </div>
@@ -59,8 +59,29 @@
     </div>
     <script type="text/javascript" src="~/Scripts/layui/layui.all.js"></script>
     <script type="text/javascript">
+        var $ = layui.$;
         $(function () {
-            console.log(456);
+            function getVcode() {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: "/auth/getvcode?codeID=" + $("#CodeID").val(),
+                    async: false,
+                    error: function (request) {
+                        layer.alert("Connection error", { icon: 2 });
+                    },
+                    success: function (data) {
+                        if (data && data.Status == 0) {
+                            $("#CodeID").val(data.Data.codeID);
+                            $("#vcode").attr("src", data.Data.imgdata);
+                        }
+                    }
+                });
+            }
+            $("#vcode").click(function () {
+                getVcode();
+            });
+            getVcode();
         })
     </script>
 </body>

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace TaskMall.Web.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
         // GET: Auth
         //登录页面
